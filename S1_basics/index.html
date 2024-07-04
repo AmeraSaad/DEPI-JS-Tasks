@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Assignment 1</title>
+    <style>
+            .output {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h2>Assignment Solutions</h2>
+    
+    <div>
+        <h3>1. Enter a number and print it:</h3>
+        <input type="text" id="numberInput">
+        <button onclick="printNumber()">Print Number</button>
+        <div id="output1" class="output"></div>
+    </div>
+
+    <div>
+        <h3>2. Check if a number can divide by 3 and 4:</h3>
+        <input type="text" id="divisibleInput">
+        <button onclick="checkDivisibility()">Check Divisibility</button>
+        <div id="output2" class="output"></div>
+    </div>
+
+    <!-- Task 3: Program to allow the user to insert 2 integers then print the max -->
+  <div>
+      <h3>3. Enter 2 integers and print the max:</h3>
+      <input type="text" id="num1">
+      <input type="text" id="num2">
+      <button onclick="findMax()">Find Max</button>
+      <div id="output3" class="output"></div>
+  </div>
+
+  <!-- Task 4: Program to allow the user to insert an integer then print negative or positive -->
+  <div>
+      <h3>4. Enter an integer and print negative or positive:</h3>
+      <input type="text" id="integerInput">
+      <button onclick="checkPositiveNegative()">Check</button>
+      <div id="output4" class="output"></div>
+  </div>
+
+  <!-- Task 5: Program to take 3 integers from user then print the max and min element -->
+  <div>
+      <h3>5. Enter 3 integers and print max and min:</h3>
+      <input type="text" id="num3">
+      <input type="text" id="num4">
+      <input type="text" id="num5">
+      <button onclick="findMinMax()">Find Max & Min</button>
+      <div id="output5" class="output"></div>
+  </div>
+
+  <!-- Task 6: Program to allow the user to insert an integer then check if even or odd -->
+  <div>
+      <h3>6. Enter an integer and check if even or odd:</h3>
+      <input type="text" id="numberInput">
+      <button onclick="checkEvenOdd()">Check</button>
+      <div id="output6" class="output"></div>
+  </div>
+
+  <!-- Task 7: Program to take a character from user then print vowel or consonant -->
+  <div>
+      <h3>7. Enter a character and print vowel or consonant:</h3>
+      <input type="text" id="charInput">
+      <button onclick="checkVowelConsonant()">Check</button>
+      <div id="output7" class="output"></div>
+  </div>
+
+  <!-- Task 8: Program to allow user to insert integer then print all numbers between 1 and that number -->
+  <div>
+      <h3>8. Enter an integer and print numbers from 1 to that number:</h3>
+      <input type="text" id="numberRangeInput">
+      <button onclick="printNumbersInRange()">Print Numbers</button>
+      <div id="output8" class="output"></div>
+  </div>
+
+  <!-- Task 9: Program to allow user to insert integer then print multiplication table up to 12 -->
+  <div>
+      <h3>9. Enter an integer and print multiplication table up to 12:</h3>
+      <input type="text" id="multiplicationInput">
+      <button onclick="printMultiplicationTable()">Print Table</button>
+      <div id="output9" class="output"></div>
+  </div>
+
+  <!-- Task 10: Program to allow user to insert number then print all even numbers between 1 and that number -->
+  <div>
+      <h3>10. Enter a number and print even numbers up to that number:</h3>
+      <input type="text" id="evenNumberInput">
+      <button onclick="printEvenNumbers()">Print Even Numbers</button>
+      <div id="output10" class="output"></div>
+  </div>
+
+  <!-- Task 11: Program to take two integers then print the power -->
+  <div>
+      <h3>11. Enter two integers and print the power:</h3>
+      <input type="text" id="baseInput">
+      <input type="text" id="exponentInput">
+      <button onclick="calculatePower()">Calculate Power</button>
+      <div id="output11" class="output"></div>
+  </div>
+
+  <!-- Task 12: Program to enter marks of five subjects and calculate total, average, and percentage -->
+  <div>
+      <h3>12. Enter marks of five subjects and calculate total, average, and percentage:</h3>
+      <input type="text" id="physicsMarks">
+      <input type="text" id="chemistryMarks">
+      <input type="text" id="biologyMarks">
+      <input type="text" id="mathMarks">
+      <input type="text" id="computerMarks">
+      <button onclick="calculateMarks()">Calculate Marks</button>
+      <div id="output12" class="output"></div>
+  </div>
+
+  <!-- Task 13: Program to input month number and print number of days in that month -->
+  <div>
+      <h3>13. Enter month number and print number of days:</h3>
+      <input type="text" id="monthInput">
+      <button onclick="calculateDaysInMonth()">Calculate Days</button>
+      <div id="output13" class="output"></div>
+  </div>
+
+  <!-- Task 14: Program to input marks of five subjects and find percentage and grade -->
+  <div>
+      <h3>14. Enter marks of five subjects and find percentage and grade:</h3>
+      <input type="text" id="physicsMarks2">
+      <input type="text" id="chemistryMarks2">
+      <input type="text" id="biologyMarks2">
+      <input type="text" id="mathMarks2">
+      <input type="text" id="computerMarks2">
+      <button onclick="calculatePercentageAndGrade()">Calculate</button>
+      <div id="output14" class="output"></div>
+  </div>
+
+    <!-- Task 15: Switch Case Examples -->
+    <div>
+      <label for="caseInput">Select a case (1-6):</label>
+      <input type="number" id="caseInput" min="1" max="6">
+      <button onclick="executeSwitchCase()">Execute</button>
+      <div id="output15" class="output"></div>
+  </div>
+
+  <!-- Task 16: Print Numbers 1 to 10 -->
+  <div>
+      <h3>16. Print Numbers 1 to 10:</h3>
+      <button onclick="printNumbers1to10()">Print Numbers</button>
+      <div id="output16" class="output"></div>
+  </div>
+
+  <!-- Task 17: Sum of First 10 Natural Numbers -->
+  <div>
+      <h3>17. Sum of First 10 Natural Numbers:</h3>
+      <button onclick="calculateSumOfFirst10()">Calculate Sum</button>
+      <div id="output17" class="output"></div>
+  </div>
+
+  <!-- Task 18: Print Even Numbers Between 1 and 20 -->
+  <div>
+      <h3>18. Print Even Numbers Between 1 and 20:</h3>
+      <button onclick="printEvenNumbers1to20()">Print Even Numbers</button>
+      <div id="output18" class="output"></div>
+  </div>
+
+  <!-- Task 19: Factorial of a Number -->
+  <div>
+      <h3>19. Factorial of a Number:</h3>
+      <input type="text" id="factorialInput">
+      <button onclick="calculateFactorial()">Calculate Factorial</button>
+      <div id="output19" class="output"></div>
+  </div>
+
+  <!-- Task 20: Reverse a String -->
+  <div>
+      <h3>20. Reverse a String:</h3>
+      <input type="text" id="reverseStringInput">
+      <button onclick="reverseString()">Reverse String</button>
+      <div id="output20" class="output"></div>
+  </div>
+
+  <!-- Task 21: Print Elements of an Array -->
+  <div>
+      <h3>21. Print Elements of an Array:</h3>
+      <button onclick="printArrayElements()">Print Elements</button>
+      <div id="output21" class="output"></div>
+  </div>
+
+  <!-- Task 22: Find Maximum in an Array -->
+  <div>
+      <h3>22. Find Maximum in an Array:</h3>
+      <button onclick="findMaxInArray()">Find Maximum</button>
+      <div id="output22" class="output"></div>
+  </div>
+
+  <!-- Task 23: Print Multiplication Table -->
+  <div>
+      <h3>23. Print Multiplication Table:</h3>
+      <input type="text" id="multiplicationTableInput">
+      <button onclick="printMultiplicationTableLoop()">Print Table</button>
+      <div id="output23" class="output"></div>
+  </div>
+
+  <!-- Task 24: Count Vowels in a String -->
+  <div>
+      <h3>24. Count Vowels in a String:</h3>
+      <input type="text" id="countVowelsInput">
+      <button onclick="countVowels()">Count Vowels</button>
+      <div id="output24" class="output"></div>
+  </div>
+
+  <!-- Task 25: Check Prime Number -->
+  <div>
+      <h3>25. Check Prime Number:</h3>
+      <input type="text" id="primeNumberInput">
+      <button onclick="checkPrime()">Check Prime</button>
+      <div id="output25" class="output"></div>
+  </div>
+
+    <script src="main.js">
+    </script>
+</body>
+</html>
