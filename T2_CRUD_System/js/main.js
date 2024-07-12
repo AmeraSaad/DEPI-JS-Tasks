@@ -1,106 +1,165 @@
-// Initialize variables
-var products = [];
-var productsContainer = document.getElementById("product-tabel-container");
-var warningMessage = document.getElementById("warning-msg");
-var tabelBody = document.getElementById("tabel-body");
 
-// Function to render data
-function handelREnderData() {
-    if (products.length !== 0) {
-        // If products are available, display the table and hide the warning message
-        productsContainer.classList.remove("d-none");
-        productsContainer.classList.add("d-block");
-        warningMessage.classList.add("d-none");
-        warningMessage.classList.remove("d-block");
+let products = JSON.parse(localStorage.getItem('products')) || [];
+let filteredProducts = [];
+const productsContainer = document.getElementById("product-tabel-container");
+const warningMessage = document.getElementById("warning-msg");
+const tabelBody = document.getElementById("tabel-body");
+const productForm = document.getElementById("product-form");
+const productName = document.getElementById("product_name");
+const productCat = document.getElementById("product_category");
+const productPrice = document.getElementById("product_price");
+const productDesc = document.getElementById("prodct_desc");
+const createBtn = document.getElementById("create-btn");
+const searchInput = document.getElementById("search-input");
 
-        var rows_elements = "";
 
-        // Create table rows for each product
-        for (var i = 0; i < products.length; i++) {
-            rows_elements += `
-                <tr>
-                    <th>${i + 1}</th>
-                    <td>${products[i].name}</td>
-                    <td>${products[i].cat}</td>
-                    <td>${products[i].price}</td>
-                    <td>${products[i].desc}</td>
-                    <td>
-                        <button class="btn btn-outline-success" onclick="editProduct(${i})">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-outline-danger" onclick="deleteProduct(${i})">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
-        }
+const namePattern = /^[a-zA-Z\s]+$/;
+const categoryPattern = /^[a-zA-Z\s]+$/;
+const pricePattern = /^\d+(\.\d{1,2})?$/;
 
-        tabelBody.innerHTML = rows_elements;
+
+const createTableRow = (product, index) => {
+    const tr = document.createElement('tr');
+    tr.classList.add('fade-in');
+
+    const th = document.createElement('th');
+    th.textContent = index + 1;
+    tr.appendChild(th);
+
+    const tdName = document.createElement('td');
+    tdName.textContent = product.name;
+    tr.appendChild(tdName);
+
+    const tdCat = document.createElement('td');
+    tdCat.textContent = product.cat;
+    tr.appendChild(tdCat);
+
+    const tdPrice = document.createElement('td');
+    tdPrice.textContent = product.price;
+    tr.appendChild(tdPrice);
+
+    const tdDesc = document.createElement('td');
+    tdDesc.textContent = product.desc;
+    tr.appendChild(tdDesc);
+
+    const tdEdit = document.createElement('td');
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('btn', 'btn-outline-success');
+    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+    editBtn.onclick = () => editProduct(index);
+    tdEdit.appendChild(editBtn);
+    tr.appendChild(tdEdit);
+
+    const tdDelete = document.createElement('td');
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('btn', 'btn-outline-danger');
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    deleteBtn.onclick = () => deleteProduct(index);
+    tdDelete.appendChild(deleteBtn);
+    tr.appendChild(tdDelete);
+
+    return tr;
+};
+
+const renderData = () => {
+    const productsToRender = searchInput.value ? filteredProducts : products;
+
+    if (productsToRender.length !== 0) {
+        productsContainer.classList.replace("d-none", "d-block");
+        warningMessage.classList.replace("d-block", "d-none");
+
+        tabelBody.innerHTML = ''; // Clear existing rows
+        productsToRender.forEach((product, index) => {
+            const row = createTableRow(product, index);
+            tabelBody.appendChild(row);
+        });
     } else {
-        // If no products, hide the table and display the warning message
-        warningMessage.classList.remove("d-none");
-        warningMessage.classList.add("d-block");
-        productsContainer.classList.add("d-none");
-        productsContainer.classList.remove("d-block");
+        tabelBody.innerHTML = ''; // Clear existing rows
+        const noMatchRow = document.createElement('tr');
+        const noMatchCell = document.createElement('td');
+        noMatchCell.colSpan = 7;
+        noMatchCell.classList.add('text-center');
+        noMatchCell.textContent = 'No products match';
+        noMatchRow.appendChild(noMatchCell);
+        tabelBody.appendChild(noMatchRow);
+
+        productsContainer.classList.replace("d-none", "d-block");
+        warningMessage.classList.replace("d-block", "d-none");
     }
-}
+};
 
-// Handle form submission
-var productName = document.getElementById("product_name");
-var productCat = document.getElementById("product_category");
-var productPrice = document.getElementById("product_price");
-var productDesc = document.getElementById("prodct_desc");
-var createBtn = document.getElementById("create-btn");
-var productForm = document.getElementById("product-form");
 
-productForm.onsubmit = function (event) {
+const validateForm = () => {
+    if (!namePattern.test(productName.value)) {
+        alert("Invalid product name. Only letters and spaces are allowed.");
+        return false;
+    }
+    if (!categoryPattern.test(productCat.value)) {
+        alert("Invalid product category. Only letters and spaces are allowed.");
+        return false;
+    }
+    if (!pricePattern.test(productPrice.value)) {
+        alert("Invalid product price. Only numbers and up to two decimal places are allowed.");
+        return false;
+    }
+    if (!productDesc.value) {
+        alert("Product description cannot be empty.");
+        return false;
+    }
+    return true;
+};
+
+
+const saveToLocalStorage = () => {
+    localStorage.setItem('products', JSON.stringify(products));
+};
+
+
+productForm.onsubmit = (event) => {
     event.preventDefault();
 
-    // Validate form inputs
-    if (!productName.value || !productCat.value || !productPrice.value || !productDesc.value) {
-        alert("Empty data cannot be added");
+    if (!validateForm()) {
         return;
     }
 
-    var product = {
+    const product = {
         name: productName.value,
         cat: productCat.value,
         price: productPrice.value,
         desc: productDesc.value,
     };
 
-    // Check if adding a new product or updating an existing one
+    const index = createBtn.getAttribute('data-index');
+
     if (createBtn.textContent === "Add Product") {
         products.push(product);
     } else {
-        var index = createBtn.getAttribute('data-index');
         products[index] = product;
         createBtn.textContent = "Add Product";
+        createBtn.removeAttribute('data-index');
     }
 
-    handelREnderData();
+    saveToLocalStorage();
+    renderData();
     productForm.reset();
 };
 
-// Handle clear button click
-document.querySelector(".btn-primary:nth-of-type(2)").onclick = function (event) {
+
+document.querySelector(".btn-primary:nth-of-type(2)").onclick = (event) => {
     event.preventDefault();
     productForm.reset();
 };
 
-// Edit product function
-function editProduct(index) {
-    var product = products[index];
+
+const editProduct = (index) => {
+    const product = products[index];
     productName.value = product.name;
     productCat.value = product.cat;
     productPrice.value = product.price;
     productDesc.value = product.desc;
     createBtn.textContent = "Update Product";
     createBtn.setAttribute('data-index', index);
-}
+};
 
 //Delete
 // function deleteProduct(index) {
@@ -111,7 +170,7 @@ function editProduct(index) {
 // }
 
 // Delete product function with SweetAlert confirmation
-function deleteProduct(index) {
+const deleteProduct = (index) => {
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -123,15 +182,23 @@ function deleteProduct(index) {
     }).then((result) => {
         if (result.isConfirmed) {
             products.splice(index, 1);
-            handelREnderData();
+            saveToLocalStorage();
+            renderData();
             Swal.fire(
                 'Deleted!',
                 'Your product has been deleted.',
                 'success'
-            )
+            );
         }
     });
+};
+
+// Handle search input on key up
+function handleSearch() {
+    const searchText = searchInput.value.toLowerCase();
+    filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchText));
+    renderData();
 }
 
 // Initial rendering of data
-handelREnderData();
+renderData();
