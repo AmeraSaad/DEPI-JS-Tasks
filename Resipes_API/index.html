@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Finder</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/recipes.css">
+</head>
+<body class="bg-dark">
+  <nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Recipe</a>
+      <i class="fa-solid fa-bars fa-2x text-white-50 translate make-pointer" id="control-menu"></i>
+    </div>
+  </nav>
+
+  <div class="menu shadow-lg bg-dark text-white-50 col-md-4 position-fixed" id="menu">
+    <ul class="list-group" id="sidebar">
+      <!--  -->
+    </ul>
+  </div>
+  
+  <div class="home vh-100">
+    <div class="layer w-100 h-100 d-flex justify-content-center align-items-center flex-wrap">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8">
+            <input type="text" id="search-input" class="form-control" placeholder="Search for recipes...">
+          </div>
+          <div class="col-sm-4">
+            <button class="btn btn-success w-50" id="search-btn">
+              <i class="fa-solid fa-search fa-1x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="resipes container py-5">
+    <div class="row g-4" id="resipes-container">
+      <!--  -->
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- Font Awesome JS -->
+  <script src="js/all.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/recipes.js"></script>
+</body>
+</html>
