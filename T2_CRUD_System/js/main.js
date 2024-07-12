@@ -1,4 +1,4 @@
-
+// Initialize variables
 let products = JSON.parse(localStorage.getItem('products')) || [];
 let filteredProducts = [];
 const productsContainer = document.getElementById("product-tabel-container");
@@ -12,12 +12,12 @@ const productDesc = document.getElementById("prodct_desc");
 const createBtn = document.getElementById("create-btn");
 const searchInput = document.getElementById("search-input");
 
-
+// Validation patterns
 const namePattern = /^[a-zA-Z\s]+$/;
 const categoryPattern = /^[a-zA-Z\s]+$/;
 const pricePattern = /^\d+(\.\d{1,2})?$/;
 
-
+// Helper function to create table rows
 const createTableRow = (product, index) => {
     const tr = document.createElement('tr');
     tr.classList.add('fade-in');
@@ -61,6 +61,7 @@ const createTableRow = (product, index) => {
     return tr;
 };
 
+// Function to render data
 const renderData = () => {
     const productsToRender = searchInput.value ? filteredProducts : products;
 
@@ -75,20 +76,12 @@ const renderData = () => {
         });
     } else {
         tabelBody.innerHTML = ''; // Clear existing rows
-        const noMatchRow = document.createElement('tr');
-        const noMatchCell = document.createElement('td');
-        noMatchCell.colSpan = 7;
-        noMatchCell.classList.add('text-center');
-        noMatchCell.textContent = 'No products match';
-        noMatchRow.appendChild(noMatchCell);
-        tabelBody.appendChild(noMatchRow);
-
-        productsContainer.classList.replace("d-none", "d-block");
-        warningMessage.classList.replace("d-block", "d-none");
+        productsContainer.classList.replace("d-block", "d-none");
+        warningMessage.classList.replace("d-none", "d-block");
     }
 };
 
-
+// Function to validate form inputs
 const validateForm = () => {
     if (!namePattern.test(productName.value)) {
         alert("Invalid product name. Only letters and spaces are allowed.");
@@ -109,12 +102,12 @@ const validateForm = () => {
     return true;
 };
 
-
+// Save products to local storage
 const saveToLocalStorage = () => {
     localStorage.setItem('products', JSON.stringify(products));
 };
 
-
+// Handle form submission
 productForm.onsubmit = (event) => {
     event.preventDefault();
 
@@ -144,13 +137,13 @@ productForm.onsubmit = (event) => {
     productForm.reset();
 };
 
-
+// Handle clear button click
 document.querySelector(".btn-primary:nth-of-type(2)").onclick = (event) => {
     event.preventDefault();
     productForm.reset();
 };
 
-
+// Edit product function
 const editProduct = (index) => {
     const product = products[index];
     productName.value = product.name;
@@ -194,7 +187,7 @@ const deleteProduct = (index) => {
 };
 
 // Handle search input on key up
-function handleSearch() {
+searchInput.onkeyup = function () {
     const searchText = searchInput.value.toLowerCase();
     filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchText));
     renderData();
