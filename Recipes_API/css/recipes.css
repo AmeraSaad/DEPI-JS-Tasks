@@ -1,7 +1,10 @@
-
 .menu {
   left: -100%;
   transition: left 0.3s ease-in-out;
+}
+
+.menu.show {
+  left: 0;
 }
 
 .recipe {
@@ -31,7 +34,6 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* Custom styles */
 .home {
   background-image: url(../images/home2.jpg);
   background-position: center;
@@ -124,7 +126,6 @@
   cursor: pointer;
 }
 
-/* New styles */
 .card {
   background-color: #fff;
   border: none;

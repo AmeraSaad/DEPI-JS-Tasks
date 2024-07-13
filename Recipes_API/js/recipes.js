@@ -1,71 +1,97 @@
-const options = [
-  "carrot", "broccoli", "asparagus", "cauliflower", "corn", "cucumber", 
-  "green pepper", "lettuce", "mushrooms", "onion", "potato", "pumpkin", 
-  "red pepper", "tomato", "beetroot", "brussel sprouts", "peas", "zucchini", 
-  "radish", "sweet potato", "artichoke", "leek", "cabbage", "celery", "chili", 
-  "garlic", "basil", "coriander", "parsley", "dill", "rosemary", "oregano", 
-  "cinnamon", "saffron", "green bean", "bean", "chickpea", "lentil", "apple", 
-  "apricot", "avocado", "banana", "blackberry", "blackcurrant", "blueberry", 
-  "boysenberry", "cherry", "coconut", "fig", "grape", "grapefruit", "kiwifruit", 
-  "lemon", "lime", "lychee", "mandarin", "mango", "melon", "nectarine", "orange", 
-  "papaya", "passion fruit", "peach", "pear", "pineapple", "plum", "pomegranate", 
-  "quince", "raspberry", "strawberry", "watermelon", "salad", "pizza", "pasta", 
-  "popcorn", "lobster", "steak", "bbq", "pudding", "hamburger", "pie", "cake", 
-  "sausage", "tacos", "kebab", "poutine", "seafood", "chips", "fries", "masala", 
-  "paella", "som tam", "chicken", "toast", "marzipan", "tofu", "ketchup", "hummus", 
-  "chili", "maple syrup", "parma ham", "fajitas", "champ", "lasagna", "poke", 
-  "chocolate", "croissant", "arepas", "bunny chow", "pierogi", "donuts", "rendang", 
-  "sushi", "ice cream", "duck", "curry", "beef", "goat", "lamb", "turkey", "pork", 
-  "fish", "crab", "bacon", "ham", "pepperoni", "salami", "ribs"
-];
-
-// Populate sidebar
-const sidebar = document.getElementById('sidebar');
-options.forEach(option => {
-  const li = document.createElement('li');
-  li.textContent = option;
-  li.classList.add('list-group-item', 'list-group-item-action', 'bg-dark', 'text-white-50');
-  li.addEventListener('click', () => fetchRecipes(option));
-  sidebar.appendChild(li);
-});
-
-// Fetch recipes from API
-async function fetchRecipes(query) {
-  try {
-    const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${query}`);
-    const data = await res.json();
-    displayRecipes(data.data.recipes);
-  } catch (error) {
-    console.error('Error fetching recipes:', error);
-  }
-}
-
-// Display recipes
-function displayRecipes(recipes) {
-  const resultsContainer = document.getElementById('resipes-container');
-  resultsContainer.innerHTML = '';
-  recipes.forEach(recipe => {
-    const recipeDiv = document.createElement('div');
-    recipeDiv.classList.add('col-lg-4', 'col-md-6', 'recipe');
-    recipeDiv.innerHTML = `
-      <div class="card h-100">
-        <img src="${recipe.image_url}" class="card-img-top" alt="${recipe.title}">
-        <div class="card-body">
-          <h5 class="card-title">${recipe.title}</h5>
-          <p class="card-text">${recipe.publisher}</p>
-        </div>
-      </div>
-    `;
-    resultsContainer.appendChild(recipeDiv);
-  });
-}
-
-// Toggle sidebar
-document.getElementById('control-menu').addEventListener('click', () => {
+document.addEventListener('DOMContentLoaded', () => {
+  const controlMenu = document.getElementById('control-menu');
   const menu = document.getElementById('menu');
-  if (menu.style.left === '0px') {
-    menu.style.left = '-100%';
-  } else {
-    menu.style.left = '0px';
+  const sidebar = document.getElementById('sidebar');
+  const searchInput = document.getElementById('search-input');
+  const searchBtn = document.getElementById('search-btn');
+  const recipesContainer = document.getElementById('resipes-container');
+
+  const options = [
+    "carrot", "broccoli", "asparagus", "cauliflower", "corn", "cucumber", 
+    "green pepper", "lettuce", "mushrooms", "onion", "potato", "pumpkin", 
+    "red pepper", "tomato", "beetroot", "brussel sprouts", "peas", 
+    "zucchini", "radish", "sweet potato", "artichoke", "leek", "cabbage", 
+    "celery", "chili", "garlic", "basil", "coriander", "parsley", "dill", 
+    "rosemary", "oregano", "cinnamon", "saffron", "green bean", "bean", 
+    "chickpea", "lentil", "apple", "apricot", "avocado", "banana", 
+    "blackberry", "blackcurrant", "blueberry", "boysenberry", "cherry", 
+    "coconut", "fig", "grape", "grapefruit", "kiwifruit", "lemon", 
+    "lime", "lychee", "mandarin", "mango", "melon", "nectarine", 
+    "orange", "papaya", "passion fruit", "peach", "pear", "pineapple", 
+    "plum", "pomegranate", "quince", "raspberry", "strawberry", 
+    "watermelon", "salad", "pizza", "pasta", "popcorn", "lobster", 
+    "steak", "bbq", "pudding", "hamburger", "pie", "cake", "sausage", 
+    "tacos", "kebab", "poutine", "seafood", "chips", "fries", "masala", 
+    "paella", "som tam", "chicken", "toast", "marzipan", "tofu", "ketchup", 
+    "hummus", "chili", "maple syrup", "parma ham", "fajitas", "champ", 
+    "lasagna", "poke", "chocolate", "croissant", "arepas", "bunny chow", 
+    "pierogi", "donuts", "rendang", "sushi", "ice cream", "duck", "curry", 
+    "beef", "goat", "lamb", "turkey", "pork", "fish", "crab", "bacon", 
+    "ham", "pepperoni", "salami", "ribs"
+  ];
+
+  controlMenu.addEventListener('click', () => {
+    menu.classList.toggle('show');
+    populateSidebar();
+  });
+
+  function populateSidebar() {
+    sidebar.innerHTML = '';
+    options.forEach(option => {
+      const listItem = document.createElement('li');
+      listItem.classList.add('list-group-item');
+      listItem.textContent = option;
+      sidebar.appendChild(listItem);
+    });
+  }
+
+  searchBtn.addEventListener('click', async () => {
+    const query = searchInput.value.trim();
+    if (query) {
+      console.log(`Searching for recipes with query: ${query}`);
+      const recipes = await fetchRecipes(query);
+      displayRecipes(recipes);
+    }
+  });
+
+  async function fetchRecipes(query) {
+    try {
+      const response = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${query}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('Fetched recipes:', data.recipes);
+      return data.recipes;
+    } catch (error) {
+      console.error('Error fetching recipes:', error);
+      return [];
+    }
+  }
+
+  function displayRecipes(recipes) {
+    recipesContainer.innerHTML = ''; // Clear previous results
+    if (recipes.length === 0) {
+      recipesContainer.innerHTML = '<p class="text-white">No recipes found.</p>';
+      return;
+    }
+
+    recipes.forEach(recipe => {
+      const recipeCard = document.createElement('div');
+      recipeCard.classList.add('col-md-4');
+
+      recipeCard.innerHTML = `
+        <div class="card">
+          <img src="${recipe.image_url}" class="card-img-top" alt="${recipe.title}">
+          <div class="card-body">
+            <h5 class="card-title">${recipe.title}</h5>
+            <p class="card-text">Publisher: ${recipe.publisher}</p>
+            <a href="${recipe.source_url}" target="_blank" class="btn btn-primary">View Recipe</a>
+          </div>
+        </div>
+      `;
+
+      recipesContainer.appendChild(recipeCard);
+    });
   }
 });
