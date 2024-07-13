@@ -19,10 +19,12 @@ const options = [
   "fish", "crab", "bacon", "ham", "pepperoni", "salami", "ribs"
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const controlMenu = document.getElementById('control-menu');
   const menu = document.getElementById('menu');
   const sidebar = document.getElementById('sidebar');
+  const searchInput = document.getElementById('search-input');
+  const searchBtn = document.getElementById('search-btn');
   const recipesContainer = document.getElementById('resipes-container');
 
   // Populate sidebar
@@ -37,19 +39,27 @@ document.addEventListener('DOMContentLoaded', () => {
     menu.classList.toggle('show');
   });
 
-  fetchAllRecipes();
+  searchBtn.addEventListener('click', async () => {
+    const query = searchInput.value.trim();
+    if (query) {
+      console.log(`Searching for recipes with query: ${query}`);
+      const recipes = await fetchRecipes(query);
+      displayRecipes(recipes);
+    }
+  });
 
-  async function fetchAllRecipes() {
+  async function fetchRecipes(query) {
     try {
-      const response = await fetch('https://forkify-api.herokuapp.com/api/search');
+      const response = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${query}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
       console.log('Fetched recipes:', data.recipes);
-      displayRecipes(data.recipes);
+      return data.recipes;
     } catch (error) {
       console.error('Error fetching recipes:', error);
+      return [];
     }
   }
 
@@ -78,4 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
       recipesContainer.appendChild(recipeCard);
     });
   }
+
+  // Initial fetch with a default query
+  const initialRecipes = await fetchRecipes('pizza');
+  displayRecipes(initialRecipes);
 });
