@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           </div>
         </div>
       `;
-
       recipesContainer.appendChild(recipeCard);
     });
   }

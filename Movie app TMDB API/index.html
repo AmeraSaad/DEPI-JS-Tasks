@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movies</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar fs-4">
+    <ul class="nav-links">
+      <li>
+        <a href="#" data-endpoint="nowPlaying" class="active">
+          <i class='bx bx-film'></i>
+          <span id="/movie/now_playing">Now playing</span>
+        </a>
+      </li>
+      <li>
+      <li>
+        <a href="#" data-endpoint="trending">
+          <i class='bx bx-trending-up'></i>
+          <span id="/movie/popular">Popular</span> 
+        </a>
+      </li>
+      <li>
+        <a href="#" data-endpoint="upcoming">
+          <i class='bx bx-calendar-event'></i>
+          <span id="/movie/top_rated">Top Rated</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" data-endpoint="topRated">
+          <i class='bx bx-star'></i>
+          <span id="/trending/all/week">Trending</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" data-endpoint="popular">
+          <i class='bx bx-heart'></i>
+          <span id="/movie/upcoming">Upcoming</span>
+        </a>
+      </li>
+      <li>
+        <span>
+        <a href="#contactUs">Contact Us</a>
+        </span> 
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <header class="d-flex justify-content-between align-items-center py-3">
+      <h1 class="text-white">MoviesNews</h1>
+      <div>
+        <input type="text" id="search-bar" class="form-control" placeholder="Get movies by word...">
+      </div>
+    </header>
+
+    <section class="now-playing my-5">
+      <h2 class="text-pink text-center">Now Playing</h2>
+      <div class="row justify-content-center" id="movie-list">
+        <!-- Movies will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <section class="search-results my-5">
+      <div id="search-results">
+        <!-- Search results will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <section class="contact-us my-5" id="contact">
+      <h2 class="text-pink text-center">Contact Us</h2>
+      <form id="contact-form" class="form-group">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <input type="text" id="name" class="form-control mb-3" placeholder="Enter your name">
+            <input type="email" id="email" class="form-control mb-3" placeholder="Enter your email">
+            <input type="tel" id="phone" class="form-control mb-3" placeholder="Enter your phone">
+            <input type="number" id="age" class="form-control mb-3" placeholder="Enter your age">
+            <input type="password" id="password" class="form-control mb-3" placeholder="Enter your password">
+            <input type="password" id="confirm-password" class="form-control mb-3" placeholder="Validate your password">
+            <button type="submit" class="btn btn-pink btn-block mt-3">Submit</button>
+          </div>
+        </div>
+      </form>
+    </section>
+    
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- Font Awesome JS -->
+  <script src="js/all.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/script.js"></script>
+</body>
+</html>
