@@ -5,6 +5,38 @@ body {
   color: #fff;
   font-family: Arial, sans-serif;
 }
+.header-custom {
+  position: relative;
+}
+
+.header-custom h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.header-custom .search-bar-container {
+  position: relative;
+}
+
+.header-custom .search-bar-container .form-control {
+  width: 250px;
+  background-color: #333;
+  border: none;
+  color: #fff;
+  padding-right: 30px;
+}
+
+.header-custom .search-bar-container .form-control::placeholder {
+  color: #bbb;
+}
+
+.header-custom .search-bar-container .search-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #bbb;
+}
 
 .sidebar {
   width: 250px;
@@ -46,6 +78,9 @@ body {
 
 .text-pink {
   color: #ff69b4;
+}
+.text-blue{
+  color: aqua;
 }
 
 header h1 {
@@ -97,7 +132,7 @@ header .form-control {
 /* .contact-us .form-control {
   color: #fff;
   background-color: #222;
-  border: 1px solid #555;
+
 } */
 
 .contact-us .form-control:focus {

@@ -48,6 +48,8 @@ function setupSidebar() {
       const endpoint = event.target.getAttribute('data-endpoint');
       if (endpoint) {
         fetchMovies(endpoints[endpoint]);
+        const header = document.querySelector('.now-playing h2');
+        header.textContent = event.target.textContent; // Update header text directly
       }
       document.querySelectorAll('.sidebar .nav-links li a').forEach(link => link.classList.remove('active'));
       event.target.classList.add('active');
