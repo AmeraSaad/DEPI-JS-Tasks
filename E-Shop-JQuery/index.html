@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand" href="#">E-Shop</a>
+      <div class="d-flex align-items-center">
+        <select class="form-select me-2" id="category-select" aria-label="Category select">
+          <option value="">All Categories</option>
+        </select>
+        <input class="form-control me-2" type="search" placeholder="Search by category" aria-label="Search" id="search-input">
+        <button id="search-button" class="btn btn-search" aria-label="Search button">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+      <div class="cart-container position-relative">
+        <i class="fa-solid fa-cart-shopping fa-2x text-white-50" id="cart"></i>
+        <span id="items-count" class="d-none position-absolute bg-danger rounded-circle">0</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-5 pt-5">
+    <div id="loading" class="d-flex vh-100 justify-content-center align-items-center">
+      <h2>Loading...</h2>
+    </div>
+    <div id="error" class="d-none vh-100 justify-content-center align-items-center">
+      <div class="alert alert-danger"></div>
+    </div>
+
+    <div id="main-content" class="d-none row">
+      <aside id="side_bar_id" class="col-md-3">
+        <div class="border shadow rounded-2 p-3">
+          <h3 class="m-3">Categories</h3>
+          <ul id="categories" class="list-unstyled"></ul>
+        </div>
+      </aside>      
+
+      <section class="col-md-9">
+        <div id="items" class="row g-3"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- Font Awesome JS -->
+  <script src="js/all.min.js"></script>
+  <!-- jQuery -->
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <!-- Custom JS -->
+  <script type="module" src="js/script.js"></script>
+</body>
+</html>
