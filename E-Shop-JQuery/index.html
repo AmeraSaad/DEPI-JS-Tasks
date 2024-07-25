@@ -24,12 +24,33 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </div>
-      <div class="cart-container position-relative">
-        <i class="fa-solid fa-cart-shopping fa-2x text-white-50" id="cart" data-bs-toggle="modal" data-bs-target="#cartModal"></i>
-        <span id="items-count" class="d-none position-absolute bg-danger rounded-circle">0</span>
+      <div class="cart-container position-relative mt-3 my-lg-0">
+        <i class="fa-solid fa-cart-shopping fa-2x text-white-50" id="cart" data-bs-toggle="modal" data-bs-target="#cartModal" role="button" aria-label="Cart"></i>
+        <span id="items-count" class="position-absolute bg-danger rounded-circle">0</span>
       </div>
     </div>
   </nav>
+
+  <!-- Cart Modal -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartModalLabel">Shopping Cart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul id="cart-items" class="list-unstyled"></ul>
+          <div id="empty-cart-message" class="alert alert-info d-none">Your cart is empty.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary bg-danger">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <main class="container mt-5 pt-5">
     <div id="loading" class="d-flex vh-100 justify-content-center align-items-center">
       <h2>Loading...</h2>
@@ -51,26 +72,6 @@
       </section>
     </div>
   </main>
-
-  <!-- Cart Modal -->
-  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="cartModalLabel">Shopping Cart</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <ul id="cart-items" class="list-unstyled"></ul>
-          <div id="empty-cart-message" class="alert alert-info d-none">Your cart is empty.</div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary bg-danger">Checkout</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Bootstrap Bundle with Popper -->
   <script src="js/bootstrap.bundle.min.js"></script>

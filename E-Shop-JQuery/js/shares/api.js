@@ -12,6 +12,7 @@ export default async function handleRemoteRequest(
     const res = await fetch(`${baseUrl}/${endpoint}`);
     if (res.ok) {
       const data = await res.json();
+      console.log("fetch data",data);
       success(data);
     } else {
       throw new Error("Something went wrong");

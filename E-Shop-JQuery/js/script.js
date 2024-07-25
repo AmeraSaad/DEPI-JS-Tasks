@@ -48,6 +48,7 @@ function fetchCategories() {
       mainElement.addClass("row");
 
       categoriesContainer.html(
+        `<li class="category-item">All</li>` +
         data.map((item) => `<li class="category-item" data-category="${item.name}">${item.name}</li>`).join("")
       );
 
@@ -88,8 +89,11 @@ function fetchProducts(query = "", category = "") {
               <div class="card-body">
                 <h5 class="card-title">${item.title}</h5>
                 <p class="card-text">${item.description}</p>
-                <div class="price">$${item.price}</div>
-                <button class="btn add-to-cart" data-id="${item.id}" data-item='${JSON.stringify(item)}'>Add to cart</button>
+                <p class="rate w-25 rounded-pill">${item.rating}</p>
+                <div class="d-flex align-items-center">
+                  <p class="price">$${item.price}</p>
+                  <button class="btn add-to-cart ms-auto" data-id="${item.id}" data-item='${JSON.stringify(item)}'>Add to cart</button>
+                </div>
               </div>
             </div>
           </div>
@@ -107,7 +111,6 @@ function fetchProducts(query = "", category = "") {
 function updateCartDisplay() {
   itemsCount.text(cartItems.length);
   if (cartItems.length > 0) {
-    itemsCount.removeClass("d-none");
     emptyCartMessage.addClass("d-none");
   } else {
     emptyCartMessage.removeClass("d-none");
@@ -140,6 +143,11 @@ function renderCartItems() {
 }
 
 function addToCart(item) {
+  if (item.stock === 0) {
+    alert('This item is out of stock.');
+    return;
+  }
+
   const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
   if (existingItem) {
     if (existingItem.quantity < item.stock) {
@@ -155,8 +163,12 @@ function addToCart(item) {
 }
 
 searchButton.on("click", function () {
-  const query = searchInput.val().trim();
-  fetchProducts(query);
+  const category = searchInput.val().trim();
+  if (category) {
+    fetchProducts("", category);
+  } else {
+    itemsElement.html(`<h3 class="m-3">There is no category with this name</h3>`);
+  }
 });
 
 categorySelect.on("change", function () {
@@ -171,7 +183,11 @@ categorySelect.on("change", function () {
 categoriesContainer.on("click", ".category-item", function () {
   const category = $(this).data("category");
   categorySelect.val(category);
-  fetchProducts("", category);
+  if (category) {
+    fetchProducts("", category);
+  } else {
+    fetchProducts();
+  }
 });
 
 itemsElement.on("click", ".add-to-cart", function () {
@@ -206,7 +222,7 @@ cartItemsContainer.on("click", ".decrease-quantity", function () {
   renderCartItems();
 });
 
-// Initialize
-itemsCount.removeClass("d-none");  // Show the item count at the beginning
-fetchCategories();
-fetchProducts();
+$(document).ready(function () {
+  fetchCategories();
+  fetchProducts();
+});
