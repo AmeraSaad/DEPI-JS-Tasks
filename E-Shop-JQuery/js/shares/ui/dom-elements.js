@@ -1,0 +1,11 @@
+export const categoriesContainer = $("#categories");
+export const loadingElement = $("#loading");
+export const errorElement = $("#error");
+export const mainElement = $("#main-content");
+export const itemsElement = $("#items");
+export const searchInput = $("#search-input");
+export const searchButton = $("#search-button");
+export const categorySelect = $("#category-select");
+export const itemsCount = $("#items-count");
+export const cartItemsContainer = $("#cart-items");
+export const emptyCartMessage = $("#empty-cart-message");
