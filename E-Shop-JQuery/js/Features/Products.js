@@ -19,13 +19,15 @@ export function fetchProducts(query = "", category = "") {
         data.products.map((item) => 
           `<div class="col-md-4">
             <div class="card">
-              <img src="${item.thumbnail}" alt="${item.title}">
+              <a href="product.html?id=${item.id}">
+                <img src="${item.thumbnail}" alt="${item.title}" class="card-img-top">
+              </a>
               <div class="card-body">
                 <h5 class="card-title">${item.title}</h5>
                 <p class="card-text">${item.description}</p>
                 <p class="rate w-25 rounded-pill">${item.rating}</p>
                 <div class="d-flex align-items-center">
-                  <p class="price ">$${item.price}</p>
+                  <p class="price">$${item.price}</p>
                   <button class="btn add-to-cart ms-auto" data-id="${item.id}" data-item='${JSON.stringify(item)}'>Add to cart</button>
                 </div>
               </div>

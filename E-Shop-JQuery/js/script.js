@@ -1,60 +1,74 @@
-import handleRemoteRequest from "./shares/api.js";
 import { 
   categoriesContainer, 
-  loadingElement, 
-  errorElement, 
-  mainElement, 
-  itemsElement, 
-  searchInput, 
   searchButton, 
+  searchInput, 
   categorySelect, 
-  itemsCount, 
-  cartItemsContainer, 
-  emptyCartMessage 
+  itemsElement, 
+  cartItemsContainer 
 } from "./shares/ui/dom-elements.js";
+
 import { fetchCategories } from "./Features/Categories.js";
 import { fetchProducts } from "./Features/Products.js";
-import { Cart } from "./Features/cart.js";
-import { UI } from "./shares/ui/UI.js";
-
-// Initialize cart and UI
-const cart = new Cart();
-const ui = new UI();
+import { addToCart, cartItems, updateCartDisplay, renderCartItems } from "./Features/cart.js";
 
 searchButton.on("click", function () {
   const query = searchInput.val().trim();
-  fetchProducts(query);
+  if (query) {
+      fetchProducts(query);
+  } else {
+      itemsElement.html(`<h3 class="m-3">There is no category with this name</h3>`);
+  }
 });
 
 categorySelect.on("change", function () {
   const category = $(this).val();
-  fetchProducts("", category);
+  if (category) {
+      fetchProducts("", category);
+  } else {
+      fetchProducts();
+  }
 });
 
 categoriesContainer.on("click", ".category-item", function () {
   const category = $(this).data("category");
   categorySelect.val(category);
-  fetchProducts("", category);
+  if (category) {
+      fetchProducts("", category);
+  } else {
+      fetchProducts();
+  }
 });
 
 itemsElement.on("click", ".add-to-cart", function () {
   const item = JSON.parse($(this).attr('data-item'));
-  cart.addItem(item);
+  addToCart(item);
 });
 
 cartItemsContainer.on("click", ".remove-item", function () {
   const index = $(this).data("index");
-  cart.removeItem(index);
+  cartItems.splice(index, 1);
+  updateCartDisplay();
+  renderCartItems();
 });
 
 cartItemsContainer.on("click", ".increase-quantity", function () {
   const index = $(this).data("index");
-  cart.increaseQuantity(index);
+  if (cartItems[index].quantity < cartItems[index].stock) {
+      cartItems[index].quantity += 1;
+  } else {
+      alert('Cannot add more items than available in stock.');
+  }
+  updateCartDisplay();
+  renderCartItems();
 });
 
 cartItemsContainer.on("click", ".decrease-quantity", function () {
   const index = $(this).data("index");
-  cart.decreaseQuantity(index);
+  if (cartItems[index].quantity > 1) {
+      cartItems[index].quantity -= 1;
+  }
+  updateCartDisplay();
+  renderCartItems();
 });
 
 $(document).ready(function () {
